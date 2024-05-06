@@ -12,6 +12,8 @@ public class PlayerCtrl : MonoBehaviour
     [SerializeField] private Tilemap colTilemap;
     [SerializeField] private TileBase newTile;
 
+    float posX, posY;
+
     public Grid playerGrid = new Grid();
 
     private void Awake()
@@ -57,7 +59,6 @@ public class PlayerCtrl : MonoBehaviour
             Vector3Int gridPos = playerTilemap.WorldToCell(transform.position);
             playerTilemap.SetTile(gridPos, newTile);
 
-            // Remove o tile nas outras camadas dos outros jogadores na mesma posição
             for (int i = 0; i < otherPlayersTilemaps.Length; i++)
             {
                 otherPlayersTilemaps[i].SetTile(gridPos, null);
@@ -68,10 +69,18 @@ public class PlayerCtrl : MonoBehaviour
     private bool CanMove(Vector2 direction)
     {
         Vector3Int gridPos = playerTilemap.WorldToCell(transform.position + (Vector3)direction);
+
+        posX = Mathf.Round(transform.position.x);
+        posY = Mathf.Round(transform.position.y);
+        transform.position = new Vector3(posX, posY, 1);
+
         if (colTilemap.HasTile(gridPos))
         {
             return false;
         }
-        return true; // Implemente sua lógica de movimento aqui
+        else
+        {
+            return true;
+        }
     }
 }
