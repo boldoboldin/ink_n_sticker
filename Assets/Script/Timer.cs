@@ -10,17 +10,22 @@ public class Timer : MonoBehaviour
     private float min;
     private float sec;
 
+    private bool isGameOver;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetTimer(1, 30); 
+        isGameOver = false;
+        SetTimer(0, 30); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        CountTime();
+        if(isGameOver == false)
+        {
+            CountTime();
+        }
     }
 
     private void SetTimer(float min, float sec)
@@ -40,6 +45,14 @@ public class Timer : MonoBehaviour
                 min -= 1;
                 sec = 59;
             }
+        }
+
+        if(min < 0)
+        {
+            min = 0;
+            sec = 0;
+
+            isGameOver = true;
         }
         
         if (sec >= 9.5f)
