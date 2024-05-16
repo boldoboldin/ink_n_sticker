@@ -5,24 +5,22 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    [SerializeField] private TileCounter tileCounter;
     [SerializeField] private TMP_Text timerTxt;
 
     private float min;
     private float sec;
-
     private bool isGameOver;
 
-    // Start is called before the first frame update
     void Start()
     {
         isGameOver = false;
         SetTimer(0, 30); 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(isGameOver == false)
+        if (!isGameOver)
         {
             CountTime();
         }
@@ -36,7 +34,7 @@ public class Timer : MonoBehaviour
 
     private void CountTime()
     {
-        if(min >= 0)
+        if (min >= 0)
         {
             sec -= 1 * Time.deltaTime;
 
@@ -47,14 +45,15 @@ public class Timer : MonoBehaviour
             }
         }
 
-        if(min < 0)
+        if (min < 0)
         {
             min = 0;
             sec = 0;
-
             isGameOver = true;
+            GameOver();
+            Time.timeScale = 0f;
         }
-        
+
         if (sec >= 9.5f)
         {
             timerTxt.SetText("0" + min + ":" + Mathf.Round(sec));
@@ -65,4 +64,17 @@ public class Timer : MonoBehaviour
         }
     }
 
+    private void GameOver()
+    {
+        List<TileCounter.PlayerScore> rankings = tileCounter.GetRankings();
+        DisplayWinner(rankings);
+    }
+
+    private void DisplayWinner(List<TileCounter.PlayerScore> rankings)
+    {
+        if (rankings.Count > 0)
+        {
+            Debug.Log("Winner: " + rankings[0].PlayerName + " with " + rankings[0].Score + " tiles");
+        }
+    }
 }

@@ -21,6 +21,4 @@ public class GameCtrl : MonoBehaviour
 
         players = new List<PlayerCtrl>(FindObjectsOfType<PlayerCtrl>());
     }
-
-    // Não é mais necessário verificar colisões entre os jogadores
 }
