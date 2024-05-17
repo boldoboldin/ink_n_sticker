@@ -15,7 +15,7 @@ public class Timer : MonoBehaviour
     void Start()
     {
         isGameOver = false;
-        SetTimer(0, 30); 
+        SetTimer(1, 30); 
     }
 
     void Update()
@@ -51,7 +51,7 @@ public class Timer : MonoBehaviour
             sec = 0;
             isGameOver = true;
             GameOver();
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
         }
 
         if (sec >= 9.5f)
